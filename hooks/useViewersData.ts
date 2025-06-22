@@ -1,12 +1,14 @@
+
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import type { User, ViewersData, ViewerRecord } from "@/types";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 
 export const useViewersData = (user: User | null): ViewersData => {
   const [count, setCount] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState<boolean>(false);
-  const channelRef = useRef<any>(null);
+  const channelRef = useRef<RealtimeChannel | null>(null);
   const isSubscribedRef = useRef<boolean>(false);
 
   useEffect(() => {

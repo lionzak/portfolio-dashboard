@@ -5,13 +5,13 @@ import type { OverviewStatsProps } from "@/types";
 const OverviewStats: React.FC<OverviewStatsProps> = ({ 
   viewersData, 
   sessionData, 
-  devicesData, 
+  loadData, 
   ScrollData,
   isConnected 
 }) => {
   const { count: viewerCount, error: viewerError } = viewersData;
   const { avgSessionDuration, error: sessionError } = sessionData;
-  const { deviceCounts, error: deviceError } = devicesData;
+  const { avgPageLoadTime, error: loadError, loading: loadLoading } = loadData;
   const { avgScrollDepth, error: scrollError } = ScrollData;
 
   const statsData = [
@@ -39,16 +39,30 @@ const OverviewStats: React.FC<OverviewStatsProps> = ({
     },
     {
       title: "⬇️ Average Scroll Depth",
-      amount: `${avgScrollDepth}%`,
-      subtitle: scrollError ? "Error" : "",
+      amount: scrollError ? (
+        <p style={{ color: "red" }}>Error</p>
+      ) : avgScrollDepth !== null ? (
+        `${avgScrollDepth}%`
+      ) : (
+        <p>Loading...</p>
+      ),
+      subtitle: scrollError || "",
       bgColor: "bg-gradient-to-br from-cyan-400 to-cyan-500",
       textColor: "text-white",
       showIndicator: false,
     },
     {
-      title: "💻 Desktop Visitors",
-      amount: deviceCounts.desktop.toLocaleString(),
-      subtitle: deviceError ? "Error" : "Live",
+      title: "⌚ Average Page Load Time",
+      amount: loadError ? (
+        <p style={{ color: "red" }}>Error</p>
+      ) : loadLoading ? (
+        <p>Loading...</p>
+      ) : avgPageLoadTime !== null ? (
+        `${avgPageLoadTime} ms`
+      ) : (
+        <p>No data</p>
+      ),
+      subtitle: loadError || "",
       bgColor: "bg-gradient-to-br from-purple-500 to-purple-600",
       textColor: "text-white",
       showIndicator: false,

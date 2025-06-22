@@ -1,13 +1,23 @@
-// components/UserProvider.tsx
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
-const UserContext = createContext<any>(null);
+// Define the context type
+interface UserContextType {
+  user: SupabaseUser | null;
+  setUser: (user: SupabaseUser | null) => void;
+}
 
-export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
+const UserContext = createContext<UserContextType | null>(null);
+
+interface UserProviderProps {
+  children: ReactNode;
+}
+
+export const UserProvider = ({ children }: UserProviderProps) => {
+  const [user, setUser] = useState<SupabaseUser | null>(null);
 
   useEffect(() => {
     const getUser = async () => {
@@ -35,4 +45,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const useUser = () => useContext(UserContext);
+export const useUser = (): UserContextType => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
+  return context;
+};

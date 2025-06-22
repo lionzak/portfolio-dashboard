@@ -1,7 +1,8 @@
+import React from 'react';
+
 export interface User {
   id: string;
   email?: string;
-  // Add other user properties as needed
 }
 
 export interface ViewersData {
@@ -56,10 +57,16 @@ export interface ConnectionStatusProps {
   error: string | null;
 }
 
+export interface LoadData {
+  avgPageLoadTime: number | null;
+  error: string | null;
+  loading: boolean;
+}
+
 export interface OverviewStatsProps {
   viewersData: ViewersData;
   sessionData: SessionData;
-  devicesData: DevicesData;
+  loadData: LoadData;
   ScrollData: ScrollData;
   isConnected: boolean;
 }

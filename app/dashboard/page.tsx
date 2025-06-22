@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
 import { useUser } from "@/components/UserProvider";
 import { Loader2 } from "lucide-react";
 import { useSidebar } from "@/context/SidebarContext";
 import Overview_page from "@/components/ui/Overview_page";
 
 export default function Dashboard() {
-  const { selectedTab, setSelectedTab } = useSidebar();
+  const { selectedTab} = useSidebar();
 
   const { user } = useUser();
 

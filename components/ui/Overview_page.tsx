@@ -10,6 +10,7 @@ import OverviewStats from "@/components/ui/overview_stats";
 import BrowserBarChart from "./browser_bar_char";
 import { useScrollDepthData } from "@/hooks/useScrollDepthData";
 import DeviceBarChart from "./device_bar_graph";
+import { useAveragePageLoadTime } from "@/hooks/useAveragePageLoadTime";
 
 const Overview_page: React.FC = () => {
   const { user } = useUser();
@@ -18,6 +19,7 @@ const Overview_page: React.FC = () => {
   const devicesData = useDevicesData(user);
   const sessionData = useSessionData(user);
   const scrollData = useScrollDepthData(user);
+  const loadData = useAveragePageLoadTime();
 
   const mainError = viewersData.error || devicesData.error || sessionData.error;
 
@@ -31,8 +33,8 @@ const Overview_page: React.FC = () => {
       <OverviewStats
         viewersData={viewersData}
         sessionData={sessionData}
-        devicesData={devicesData}
         ScrollData={scrollData}
+        loadData={loadData}
         isConnected={viewersData.isConnected}
       />
 

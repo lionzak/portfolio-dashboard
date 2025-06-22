@@ -1,6 +1,8 @@
+
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import type { User, DevicesData, DeviceCounts, DeviceRecord } from "@/types";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 
 export const useDevicesData = (user: User | null): DevicesData => {
   const [deviceCounts, setDeviceCounts] = useState<DeviceCounts>({
@@ -9,7 +11,7 @@ export const useDevicesData = (user: User | null): DevicesData => {
     tablet: 0,
   });
   const [error, setError] = useState<string | null>(null);
-  const channelRef = useRef<any>(null);
+  const channelRef = useRef<RealtimeChannel | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -86,4 +88,4 @@ export const useDevicesData = (user: User | null): DevicesData => {
   }, [user?.id]);
 
   return { deviceCounts, error };
-};
+};  
