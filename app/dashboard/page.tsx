@@ -3,7 +3,7 @@
 import { useUser } from "@/components/UserProvider";
 import { useSidebar } from "@/context/SidebarContext";
 import Overview_page from "@/components/ui/Overview_page";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
   const { selectedTab} = useSidebar();
