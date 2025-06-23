@@ -1,4 +1,10 @@
-// /app/api/getform/route.ts
+
+interface ErrorResponse {
+  error: string;
+  status?: number;
+  statusText?: string;
+  timestamp?: string;
+}
 
 export async function GET(request: Request) {
   try {
@@ -18,12 +24,14 @@ export async function GET(request: Request) {
 
     if (!res.ok) {
       console.error('Getform API response:', res.status, res.statusText);
+      const errorResponse: ErrorResponse = {
+        error: "Getform fetch failed",
+        status: res.status,
+        statusText: res.statusText
+      };
+      
       return new Response(
-        JSON.stringify({ 
-          error: "Getform fetch failed", 
-          status: res.status,
-          statusText: res.statusText 
-        }), 
+        JSON.stringify(errorResponse), 
         { 
           status: 500,
           headers: {
@@ -41,13 +49,16 @@ export async function GET(request: Request) {
         'Content-Type': 'application/json',
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('API route error:', error);
+    
+    const errorResponse: ErrorResponse = {
+      error: error instanceof Error ? error.message : 'Internal server error',
+      timestamp: new Date().toISOString()
+    };
+    
     return new Response(
-      JSON.stringify({ 
-        error: error.message || 'Internal server error',
-        timestamp: new Date().toISOString()
-      }), 
+      JSON.stringify(errorResponse), 
       { 
         status: 500,
         headers: {
