@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, User, MessageSquare, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatDate } from '@/utils/format_date';
+import { getInitials } from '@/utils/get_avatar_initials';
 
 interface Submission {
     name: string;
@@ -67,11 +68,9 @@ const SubmissionsDashboard: React.FC = () => {
         }
     };
 
-    
 
-    const getInitials = (name: string): string => {
-        return name.split(' ').map(n => n[0]).join('').toUpperCase();
-    };
+
+
 
     if (loading) {
         return (
@@ -108,9 +107,12 @@ const SubmissionsDashboard: React.FC = () => {
                     <div className="flex items-center justify-between">
                         <div>
                             <h1 className="text-2xl font-bold text-gray-900">Submissions Dashboard</h1>
-                            <p className="text-gray-600 mt-1">Form ID: {data.data.id}</p>
+                            <div className="flex items-center space-x-4 mt-1">
+                                <p className="text-gray-600">Form ID:</p>
+                                <span className="font-mono text-blue-700 bg-blue-100 px-2 py-0.5 rounded">{data.data.id}</span>
+                            </div>
                         </div>
-                        <div className="bg-blue-50 px-4 py-2 rounded-lg">   
+                        <div className="bg-blue-50 px-4 py-2 rounded-lg">
                             <span className="text-blue-800 font-semibold">{pagination.total} Total Submissions</span>
                         </div>
                     </div>
@@ -157,7 +159,7 @@ const SubmissionsDashboard: React.FC = () => {
                         <h2 className="text-lg font-semibold text-gray-900">Recent Submissions</h2>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto">
+                    {data.data.submissions.length != 0 ? <div className="flex-1 overflow-y-auto">
                         <div className="divide-y divide-gray-200">
                             {submissions.map((submission) => (
                                 <div key={submission.id} className="p-6 hover:bg-gray-50 transition-colors">
@@ -204,7 +206,7 @@ const SubmissionsDashboard: React.FC = () => {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div> : <><h1 className='mt-8 text-2xl'>No submissions yet</h1></>}
                 </div>
 
                 {/* Pagination */}
@@ -245,8 +247,8 @@ const SubmissionsDashboard: React.FC = () => {
                                             key={pageNum}
                                             onClick={() => handlePageChange(pageNum)}
                                             className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${pageNum === pagination.currentPage
-                                                    ? 'bg-blue-600 text-white'
-                                                    : 'text-gray-700 hover:bg-gray-50 border border-gray-300'
+                                                ? 'bg-blue-600 text-white'
+                                                : 'text-gray-700 hover:bg-gray-50 border border-gray-300'
                                                 }`}
                                         >
                                             {pageNum}
