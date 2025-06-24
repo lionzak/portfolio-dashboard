@@ -21,7 +21,6 @@ export default function Home() {
         } = await supabase.auth.getSession();
         setUser(session?.user ?? null);
       } catch (error) {
-        console.error("Error getting session:", error);
         setUser(null);
       } finally {
         setLoading(false);

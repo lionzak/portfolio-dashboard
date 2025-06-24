@@ -24,8 +24,8 @@ export default function DeviceBarChart({ devicesData }: { devicesData: DevicesDa
 
   const data = [
     { device: "mobile", count: deviceCounts.mobile },
-    { device: "desktop", count: deviceCounts.desktop },
     { device: "tablet", count: deviceCounts.tablet },
+    { device: "desktop", count: deviceCounts.desktop },
   ];
 
   return (

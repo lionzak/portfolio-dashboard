@@ -70,7 +70,7 @@ const OverviewStats: React.FC<OverviewStatsProps> = ({
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2x gap-6 max-w-6xl">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 w-full max-w-none">
       {statsData.map((stat, i) => (
         <StatCard
           key={i}

@@ -24,26 +24,29 @@ const Overview_page: React.FC = () => {
   const mainError = viewersData.error || devicesData.error || sessionData.error;
 
   return (
-    <div className="pl-6 bg-gray-50">
-      <ConnectionStatus
-        isConnected={viewersData.isConnected}
-        error={mainError}
-      />
+    <div className="p-4 sm:p-6 lg:pl-6 lg:pr-0 bg-gray-50 min-h-screen">
+      <div className="max-w-7xl mx-auto lg:mx-0">
+        <ConnectionStatus
+          isConnected={viewersData.isConnected}
+          error={mainError}
+        />
 
-      <OverviewStats
-        viewersData={viewersData}
-        sessionData={sessionData}
-        ScrollData={scrollData}
-        loadData={loadData}
-        isConnected={viewersData.isConnected}
-      />
+        <OverviewStats
+          viewersData={viewersData}
+          sessionData={sessionData}
+          ScrollData={scrollData}
+          loadData={loadData}
+          isConnected={viewersData.isConnected}
+        />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 pr-6">
-        <div className="w-full">
-          <BrowserBarChart />
-        </div>
-        <div className="w-full">
-          <DeviceBarChart devicesData={devicesData} />
+        {/* Charts Grid - Responsive */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-6 lg:pr-6">
+          <div className="w-full">
+            <BrowserBarChart />
+          </div>
+          <div className="w-full">
+            <DeviceBarChart devicesData={devicesData} />
+          </div>
         </div>
       </div>
     </div>

@@ -37,13 +37,22 @@ export default function BrowserBarChart() {
       if (error) {
         console.error("Failed to fetch browser data", error.message);
       } else {
-        setData(data);
+        // Sort browsers in the order: Chrome, Safari, Edge
+        const browserOrder = ["Chrome", "Safari", "Edge"];
+        const sortedData = data
+          .slice()
+          .sort(
+            (a: BrowserStat, b: BrowserStat) =>
+              browserOrder.indexOf(a.browser) - browserOrder.indexOf(b.browser)
+          );
+        setData(sortedData);
       }
 
       setLoading(false);
     };
 
     fetchBrowserData();
+
   }, []);
 
   return (
