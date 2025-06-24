@@ -24,7 +24,7 @@ const Overview_page: React.FC = () => {
   const mainError = viewersData.error || devicesData.error || sessionData.error;
 
   return (
-    <div className="p-4 sm:p-6 lg:pl-6 lg:pr-0 bg-gray-50 min-h-screen max-h-screen overflow-y-auto flex flex-col">
+    <div className="p-4 sm:p-6 lg:pl-6 lg:pr-0 bg-gray-50 min-h-screen max-h-screen overflow-y-auto flex flex-col ">
       <div className="max-w-7xl mx-auto lg:mx-0 pb-8 flex-1 min-h-0">
         <ConnectionStatus
           isConnected={viewersData.isConnected}
@@ -43,12 +43,10 @@ const Overview_page: React.FC = () => {
 
         {/* Charts Grid - Responsive - Always Visible */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:pr-6 flex-1 min-h-0">
-          <div className="w-full bg-white rounded-lg shadow-sm border p-4 sm:p-6">
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Browser Analytics</h3>
+          <div className="w-full bg-white rounded-lg shadow-sm border p-4 sm:p-2">
             <BrowserBarChart />
           </div>
-          <div className="w-full bg-white rounded-lg shadow-sm border p-4 sm:p-6">
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Device Analytics</h3>
+          <div className="w-full bg-white rounded-lg shadow-sm border p-4 sm:p-2">
             <DeviceBarChart devicesData={devicesData} />
           </div>
         </div>

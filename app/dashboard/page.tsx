@@ -35,6 +35,7 @@ export default function Dashboard() {
     <div className="text-center h-full">
       {selectedTab === "Overview" && <Overview_page />}
       {selectedTab === "Form" && <Form_page />}
+      {selectedTab === "Social" && <>social media</>}
     </div>
   );
 }

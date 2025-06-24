@@ -70,18 +70,18 @@ const OverviewStats: React.FC<OverviewStatsProps> = ({
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 w-full max-w-none">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6 w-full max-w-none pr-5">
       {statsData.map((stat, i) => (
-        <StatCard
-          key={i}
-          title={stat.title}
-          amount={stat.amount}
-          subtitle={stat.subtitle}
-          bgColor={stat.bgColor}
-          textColor={stat.textColor}
-          showIndicator={stat.showIndicator}
-          isConnected={isConnected}
-        />
+      <StatCard
+        key={i}
+        title={stat.title}
+        amount={stat.amount}
+        subtitle={stat.subtitle}
+        bgColor={stat.bgColor}
+        textColor={stat.textColor}
+        showIndicator={stat.showIndicator}
+        isConnected={isConnected}
+      />
       ))}
     </div>
   );

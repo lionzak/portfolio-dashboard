@@ -56,7 +56,7 @@ export default function BrowserBarChart() {
   }, []);
 
   return (
-    <div className="bg-white rounded shadow max-w-md mx-auto">
+    <div className="bg-white max-w-md mx-auto">
       <h2 className="text-center text-lg font-semibold mt-2">Browser Usage</h2>
       {loading ? (
         <p className="text-center text-gray-500 text-sm py-4">Loading...</p>

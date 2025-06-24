@@ -3,7 +3,7 @@
 
 import { useSidebar } from "@/context/SidebarContext";
 import SidebarItem from "./Sidebar_element";
-import { FileText, LayoutDashboard } from "lucide-react";
+import { FileText, LayoutDashboard, MonitorPlay } from "lucide-react";
 
 const Sidebar = () => {
   const { selectedTab, setSelectedTab } = useSidebar();
@@ -21,6 +21,13 @@ const Sidebar = () => {
         label="Form"
         isSelected={selectedTab === "Form"}
         onClick={() => setSelectedTab("Form")}
+      />
+
+      <SidebarItem
+        icon={<MonitorPlay className="sidebar_icon" />}
+        label="Social Media"
+        isSelected={selectedTab === "Social"}
+        onClick={() => setSelectedTab("Social")}
       />
     </div>
   );
