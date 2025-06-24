@@ -20,7 +20,7 @@ export default function Home() {
           data: { session },
         } = await supabase.auth.getSession();
         setUser(session?.user ?? null);
-      } catch (error) {
+      } catch {
         setUser(null);
       } finally {
         setLoading(false);
