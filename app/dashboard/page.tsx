@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Form_page from "@/components/ui/Form_page";
 import { useEffect } from "react";
 import SocialMediaPage from "@/components/ui/social_media_page";
+import PersonaInfoPage from "@/components/ui/personal_info_page";
 
 export default function Dashboard() {
   const { selectedTab } = useSidebar();
@@ -37,6 +38,7 @@ export default function Dashboard() {
       {selectedTab === "Overview" && <Overview_page />}
       {selectedTab === "Form" && <Form_page />}
       {selectedTab === "Social" && <SocialMediaPage />}
+      {selectedTab === "Info" && <PersonaInfoPage />}
     </div>
   );
 }
