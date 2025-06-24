@@ -26,6 +26,9 @@ export default function PersonaInfoPage() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  const [effectColor, setEffectColor] = useState("#3a6cf4"); // default fallback
+
+
   // Function triggered on successful upload
 
   const onUploadSuccess = async (imageUrl: string) => {
@@ -88,6 +91,20 @@ export default function PersonaInfoPage() {
         originalValue: prev.value,
       }));
     }
+  };
+
+  const handleColorSave = async () => {
+    const { error } = await supabase.rpc("update_effect_color", {
+      new_color: effectColor,
+    });
+
+    if (error) {
+      console.error("Failed to update color:", error.message);
+      alert("Error saving color");
+      return;
+    }
+
+    alert("Color updated!");
   };
 
   const handleCancel = (field: 'about' | 'brief') => {
@@ -158,6 +175,10 @@ export default function PersonaInfoPage() {
         setUploadedImage(personal.image_url); // 👈 display the uploaded image
       }
 
+      if (personal.effect_color) {
+        setEffectColor(personal.effect_color);
+      }
+
     }
   };
 
@@ -207,8 +228,11 @@ export default function PersonaInfoPage() {
                   <X size={16} className="mr-2" />
                   Cancel
                 </button>
+
               </div>
+
             </div>
+
           ) : (
             <div className="p-3 bg-gray-50 rounded-md min-h-[8rem] flex items-center">
               <p className="text-gray-700">
@@ -216,6 +240,27 @@ export default function PersonaInfoPage() {
               </p>
             </div>
           )}
+
+
+          <div className="mt-3">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-gray-800">About Text</h2>
+              <div className="flex items-center">
+                <input
+                  type="color"
+                  value={effectColor}
+                  onChange={(e) => setEffectColor(e.target.value)}
+                  className="w-16 h-10 p-0 border border-gray-300 rounded-md"
+                />
+                <button
+                  onClick={handleColorSave}
+                  className="ml-4 px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition-colors"
+                >
+                  Save Color
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Brief Text Section */}
