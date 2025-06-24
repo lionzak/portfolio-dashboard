@@ -167,8 +167,8 @@ const SubmissionsDashboard: React.FC = () => {
                         <h2 className="text-base sm:text-lg font-semibold text-gray-900">Recent Submissions</h2>
                     </div>
 
-                    {data.data.submissions.length !== 0 ? (
-                        <div className="flex-1 min-h-0 overflow-y-auto">
+                    <div className="flex-1 min-h-0 overflow-y-auto" style={{ maxHeight: '400px' }}>
+                        {data.data.submissions.length !== 0 ? (
                             <div className="divide-y divide-gray-200">
                                 {submissions.map((submission) => (
                                     <div key={submission.id} className="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
@@ -220,12 +220,12 @@ const SubmissionsDashboard: React.FC = () => {
                                     </div>
                                 ))}
                             </div>
-                        </div>
-                    ) : (
-                        <div className="flex-1 flex items-center justify-center">
-                            <h1 className='text-lg sm:text-2xl text-gray-500'>No submissions yet</h1>
-                        </div>
-                    )}
+                        ) : (
+                            <div className="flex-1 flex items-center justify-center">
+                                <h1 className='text-lg sm:text-2xl text-gray-500'>No submissions yet</h1>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Pagination - Keep it fixed at bottom */}
