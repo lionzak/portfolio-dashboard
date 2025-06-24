@@ -168,7 +168,7 @@ const SubmissionsDashboard: React.FC = () => {
                     </div>
 
                     {data.data.submissions.length !== 0 ? (
-                        <div className="flex-1 overflow-y-auto min-h-0">
+                        <div className="flex-1 min-h-0 overflow-y-auto">
                             <div className="divide-y divide-gray-200">
                                 {submissions.map((submission) => (
                                     <div key={submission.id} className="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
