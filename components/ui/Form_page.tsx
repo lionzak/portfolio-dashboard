@@ -104,15 +104,17 @@ const SubmissionsDashboard: React.FC = () => {
                             <h1 className="text-xl sm:text-2xl font-bold text-gray-900 truncate">
                                 Submissions Dashboard
                             </h1>
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mt-2 space-y-2 sm:space-y-0">
-                                <p className="text-sm sm:text-base text-gray-600">Form ID:</p>
-                                <span className="font-mono text-xs sm:text-sm text-blue-700 bg-blue-100 px-2 py-1 rounded break-all">
+                            {/* Show Form ID only on sm and up */}
+                            <div className="hidden sm:flex flex-row items-center space-x-4 mt-2">
+                                <p className="text-base text-gray-600">Form ID:</p>
+                                <span className="font-mono text-sm text-blue-700 bg-blue-100 px-2 py-1 rounded break-all">
                                     {data.data.id}
                                 </span>
                             </div>
                         </div>
-                        <div className="bg-blue-50 px-3 sm:px-4 py-2 rounded-lg flex-shrink-0">
-                            <span className="text-blue-800 font-semibold text-sm sm:text-base">
+                        {/* Show Total Submissions only on sm and up */}
+                        <div className="hidden sm:flex bg-blue-50 px-4 py-2 rounded-lg flex-shrink-0">
+                            <span className="text-blue-800 font-semibold text-base">
                                 {pagination.total} Total Submissions
                             </span>
                         </div>
