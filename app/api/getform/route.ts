@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     const page = searchParams.get('page') || '1';
     
     // Build the API URL with pagination
-    const apiUrl = `https://api.getform.io/v1/forms/byvymjra?token=GMZqeIUP4X6RSWztaqAj0d7xO6xCbjr3tLN9UCmHxszYJqRDOFgW2Km7fdTG&page=${page}`;
+    const apiUrl = `https://api.getform.io/v1/forms/bwnwkxma?token=zCKl4yG6iLvpP8niPjvvC0TEzTM3vIMNlEERnuflsPLyW2qnxwNm0DjvmCJF&page=${page}`;
     
     const res = await fetch(apiUrl, {
       method: 'GET',
