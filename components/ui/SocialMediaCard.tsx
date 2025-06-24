@@ -2,7 +2,7 @@ import React from 'react';
 import { FaFacebook, FaLinkedin , FaWhatsapp } from 'react-icons/fa';
 import EditableText from './EditableText';
 
-const handleSave = (newText: string) => {
+const handleSave = () => {
     setTimeout(() => console.log("asd")
         , 2000);
 };
