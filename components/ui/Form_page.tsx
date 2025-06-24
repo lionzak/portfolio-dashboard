@@ -121,9 +121,9 @@ const SubmissionsDashboard: React.FC = () => {
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col px-4 sm:px-6 lg:px-8 py-4 sm:py-8 min-h-0">
+            <div className="flex-1 flex flex-col px-4 sm:px-6 lg:px-8 py-4 sm:py-8 h-0">
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 flex-shrink-0">
                     <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 border">
                         <div className="flex items-center">
                             <MessageSquare className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500 flex-shrink-0" />
@@ -161,14 +161,14 @@ const SubmissionsDashboard: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Submissions List - Scrollable */}
-                <div className="bg-white rounded-lg shadow-sm border flex-1 flex flex-col min-h-0">
+                {/* Submissions List - This should now scroll properly */}
+                <div className="bg-white rounded-lg shadow-sm border flex-1 flex flex-col min-h-0 overflow-hidden">
                     <div className="px-4 sm:px-6 py-3 sm:py-4 border-b flex-shrink-0">
                         <h2 className="text-base sm:text-lg font-semibold text-gray-900">Recent Submissions</h2>
                     </div>
 
                     {data.data.submissions.length !== 0 ? (
-                        <div className="flex-1 overflow-y-auto">
+                        <div className="flex-1 overflow-y-auto min-h-0">
                             <div className="divide-y divide-gray-200">
                                 {submissions.map((submission) => (
                                     <div key={submission.id} className="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
@@ -228,66 +228,68 @@ const SubmissionsDashboard: React.FC = () => {
                     )}
                 </div>
 
-                {/* Pagination */}
+                {/* Pagination - Keep it fixed at bottom */}
                 {pagination.lastPage > 1 && (
-                    <div className="mt-4 sm:mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0 flex-shrink-0">
-                        <div className="text-xs sm:text-sm text-gray-700 text-center sm:text-left">
-                            <div className="block sm:inline">
-                                Showing page {pagination.currentPage} of {pagination.lastPage}
+                    <div className="mt-4 sm:mt-8 flex-shrink-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                            <div className="text-xs sm:text-sm text-gray-700 text-center sm:text-left">
+                                <div className="block sm:inline">
+                                    Showing page {pagination.currentPage} of {pagination.lastPage}
+                                </div>
+                                <span className="block sm:inline sm:ml-2 text-gray-500">
+                                    ({((pagination.currentPage - 1) * pagination.size) + 1}-{Math.min(pagination.currentPage * pagination.size, pagination.total)} of {pagination.total})
+                                </span>
                             </div>
-                            <span className="block sm:inline sm:ml-2 text-gray-500">
-                                ({((pagination.currentPage - 1) * pagination.size) + 1}-{Math.min(pagination.currentPage * pagination.size, pagination.total)} of {pagination.total})
-                            </span>
-                        </div>
-                        
-                        <div className="flex items-center justify-center space-x-1 sm:space-x-2">
-                            <button
-                                onClick={() => handlePageChange(pagination.currentPage - 1)}
-                                disabled={pagination.currentPage === pagination.firstPage}
-                                className="inline-flex items-center px-2 sm:px-3 py-2 border border-gray-300 rounded-md text-xs sm:text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                            >
-                                <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-1" />
-                                <span className="hidden sm:inline">Previous</span>
-                            </button>
+                            
+                            <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+                                <button
+                                    onClick={() => handlePageChange(pagination.currentPage - 1)}
+                                    disabled={pagination.currentPage === pagination.firstPage}
+                                    className="inline-flex items-center px-2 sm:px-3 py-2 border border-gray-300 rounded-md text-xs sm:text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-1" />
+                                    <span className="hidden sm:inline">Previous</span>
+                                </button>
 
-                            {/* Page numbers - Show fewer on mobile */}
-                            <div className="flex items-center space-x-1">
-                                {Array.from({ length: Math.min(window.innerWidth < 640 ? 3 : 5, pagination.lastPage) }, (_, i) => {
-                                    const maxPages = window.innerWidth < 640 ? 3 : 5;
-                                    let pageNum;
-                                    if (pagination.lastPage <= maxPages) {
-                                        pageNum = i + 1;
-                                    } else if (pagination.currentPage <= Math.ceil(maxPages / 2)) {
-                                        pageNum = i + 1;
-                                    } else if (pagination.currentPage >= pagination.lastPage - Math.floor(maxPages / 2)) {
-                                        pageNum = pagination.lastPage - maxPages + 1 + i;
-                                    } else {
-                                        pageNum = pagination.currentPage - Math.floor(maxPages / 2) + i;
-                                    }
+                                {/* Page numbers - Show fewer on mobile */}
+                                <div className="flex items-center space-x-1">
+                                    {Array.from({ length: Math.min(typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 5, pagination.lastPage) }, (_, i) => {
+                                        const maxPages = typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 5;
+                                        let pageNum;
+                                        if (pagination.lastPage <= maxPages) {
+                                            pageNum = i + 1;
+                                        } else if (pagination.currentPage <= Math.ceil(maxPages / 2)) {
+                                            pageNum = i + 1;
+                                        } else if (pagination.currentPage >= pagination.lastPage - Math.floor(maxPages / 2)) {
+                                            pageNum = pagination.lastPage - maxPages + 1 + i;
+                                        } else {
+                                            pageNum = pagination.currentPage - Math.floor(maxPages / 2) + i;
+                                        }
 
-                                    return (
-                                        <button
-                                            key={pageNum}
-                                            onClick={() => handlePageChange(pageNum)}
-                                            className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors ${pageNum === pagination.currentPage
-                                                ? 'bg-blue-600 text-white'
-                                                : 'text-gray-700 hover:bg-gray-50 border border-gray-300'
-                                                }`}
-                                        >
-                                            {pageNum}
-                                        </button>
-                                    );
-                                })}
+                                        return (
+                                            <button
+                                                key={pageNum}
+                                                onClick={() => handlePageChange(pageNum)}
+                                                className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors ${pageNum === pagination.currentPage
+                                                    ? 'bg-blue-600 text-white'
+                                                    : 'text-gray-700 hover:bg-gray-50 border border-gray-300'
+                                                    }`}
+                                            >
+                                                {pageNum}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    onClick={() => handlePageChange(pagination.currentPage + 1)}
+                                    disabled={pagination.currentPage === pagination.lastPage}
+                                    className="inline-flex items-center px-2 sm:px-3 py-2 border border-gray-300 rounded-md text-xs sm:text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    <span className="hidden sm:inline">Next</span>
+                                    <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 sm:ml-1" />
+                                </button>
                             </div>
-
-                            <button
-                                onClick={() => handlePageChange(pagination.currentPage + 1)}
-                                disabled={pagination.currentPage === pagination.lastPage}
-                                className="inline-flex items-center px-2 sm:px-3 py-2 border border-gray-300 rounded-md text-xs sm:text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                            >
-                                <span className="hidden sm:inline">Next</span>
-                                <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 sm:ml-1" />
-                            </button>
                         </div>
                     </div>
                 )}
