@@ -126,7 +126,7 @@ const SkillsPage = () => {
                 <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold'>Skills Management</h1>
                 {/**add button */}
                 <div className=' items-center flex absolute right-10'>
-                    <button className='bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded' onClick={() => setSkillModalOpen(true)}>
+                    <button className='bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded text-white' onClick={() => setSkillModalOpen(true)}>
                         Add
                     </button>
                 </div>
