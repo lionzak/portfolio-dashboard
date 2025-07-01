@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Check, X, Upload } from 'lucide-react'
+import { Check, X } from 'lucide-react'
 import { supabase } from '@/lib/supabaseClient'
 import Upload_image from './upload_image'
 

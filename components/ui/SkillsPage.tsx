@@ -27,7 +27,7 @@ const SkillsPage = () => {
         const bucket = "avatars"; // Change if your bucket is named differently
 
         // Upload to Supabase
-        const { data, error } = await supabase.storage
+        const { error } = await supabase.storage
             .from(bucket)
             .upload(fileName, file);
 
