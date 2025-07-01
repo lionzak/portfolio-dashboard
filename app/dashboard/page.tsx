@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import SocialMediaPage from "@/components/ui/social_media_page";
 import PersonaInfoPage from "@/components/ui/personal_info_page";
 import SkillsPage from "@/components/ui/SkillsPage";
+import ProjectsPage from "@/components/ui/ProjectsPage";
 
 export default function Dashboard() {
   const { selectedTab } = useSidebar();
@@ -41,6 +42,7 @@ export default function Dashboard() {
       {selectedTab === "Social" && <SocialMediaPage />}
       {selectedTab === "Info" && <PersonaInfoPage />}
       {selectedTab === "Skills" && <SkillsPage/>}
+      {selectedTab === "Projects" && <ProjectsPage/>}
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { Upload } from 'lucide-react'
 import React, { ChangeEventHandler, MouseEventHandler, Ref } from 'react'
+import Image from 'next/image'
 
-const Upload_image = ({triggerFileInput, fileInputRef, handleImageUpload, uploadedImage}: {triggerFileInput: MouseEventHandler<HTMLButtonElement>, fileInputRef: Ref<HTMLInputElement>, handleImageUpload: ChangeEventHandler<HTMLInputElement>, uploadedImage: string | null}) => {
+const Upload_image = ({ triggerFileInput, fileInputRef, handleImageUpload, uploadedImage }: { triggerFileInput: MouseEventHandler<HTMLButtonElement>, fileInputRef: Ref<HTMLInputElement>, handleImageUpload: ChangeEventHandler<HTMLInputElement>, uploadedImage: string | null }) => {
     return (
         <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Image Upload</h2>
@@ -25,10 +26,11 @@ const Upload_image = ({triggerFileInput, fileInputRef, handleImageUpload, upload
 
                 {uploadedImage && (
                     <div className="mt-4">
-                        <p className="text-sm text-gray-600 mb-2">Uploaded Image:</p>
-                        <img
+                        <Image
                             src={uploadedImage}
                             alt="Uploaded"
+                            width={320}
+                            height={240}
                             className="max-w-xs h-auto rounded-md border border-gray-300"
                         />
                     </div>

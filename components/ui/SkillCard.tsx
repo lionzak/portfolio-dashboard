@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image'
-import { Check, Pen, Upload, X } from 'lucide-react'
+import { Check, OctagonX, Pen, Upload, X } from 'lucide-react'
 import { supabase } from '@/lib/supabaseClient'
 
 const SkillCard = ({ imageUrl, skillName, handleDelete, skillID, fetchSkills }: { imageUrl: string, skillName: string, handleDelete: () => Promise<void>, skillID: string, fetchSkills: () => void }) => {
@@ -69,7 +69,6 @@ const SkillCard = ({ imageUrl, skillName, handleDelete, skillID, fetchSkills }: 
             fetchSkills()
         }
 
-
     }
 
     return (
@@ -128,10 +127,10 @@ const SkillCard = ({ imageUrl, skillName, handleDelete, skillID, fetchSkills }: 
 
                     <div className="space-x-1">
                         <button onClick={handleEdit}>
-                            <Pen />
+                            <Pen className='text-blue-400'/>
                         </button>
                         <button onClick={handleDelete}>
-                            <X />
+                            <OctagonX  className='text-red-500'/>
                         </button>
                     </div>
                 </>

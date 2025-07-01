@@ -9,6 +9,7 @@ const SkillsPage = () => {
     const [skills, setSkills] = useState([]);
     const [isSkillModalOpen, setSkillModalOpen] = useState(false);
     const [file, setFile] = useState<File | null>(null);
+    const [loading, setLoading] = useState(true);
 
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +63,10 @@ const SkillsPage = () => {
 
 
     useEffect(() => {
-        fetchSkills()
+        setLoading(true)
+        fetchSkills().then(() => {
+            setLoading(false);
+        })
     }, [])
 
     const fetchSkills = async () => {
@@ -118,6 +122,11 @@ const SkillsPage = () => {
         await fetchSkills();
     };
 
+    if (loading) return (
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+            <p className="text-lg text-gray-600">Loading...</p>
+        </div>
+    );
 
     return (
         <div className="min-h-screen bg-gray-100 py-6 sm:py-8 lg:py-12 px-4 sm:px-6 lg:px-8 overflow-auto">
