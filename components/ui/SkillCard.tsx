@@ -42,7 +42,7 @@ const SkillCard = ({ imageUrl, skillName, handleDelete, skillID, fetchSkills }: 
             console.log('✅ Image deleted successfully');
         }
 
-        const { data: storageData, error: storageError } = await supabase.storage
+        const { error: storageError } = await supabase.storage
             .from(bucket)
             .upload(fileName, file);
 
@@ -58,7 +58,7 @@ const SkillCard = ({ imageUrl, skillName, handleDelete, skillID, fetchSkills }: 
 
         const publicUrl = urlData.publicUrl;
 
-        const { data: skillData, error: skillError } = await supabase.rpc('update_skill_by_id', { skill_id: skillID, new_name: newSkillName, new_image: publicUrl || imageUrl });
+        const { error: skillError } = await supabase.rpc('update_skill_by_id', { skill_id: skillID, new_name: newSkillName, new_image: publicUrl || imageUrl });
 
         if (skillError) {
             alert("Skill not updated")
