@@ -8,7 +8,7 @@ import Image from 'next/image';
 const ProjectsPage = () => {
     const [isProjectModalOpen, setProjectModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [projects, setProjects] = useState<any[]>([]);
+    const [projects, setProjects] = useState<{id: string, project_name: string, project_brief: string, project_link: string, images: string[]}[]>([]);
     const [name, setName] = useState('');
     const [brief, setBrief] = useState('');
     const [link, setLink] = useState('');
@@ -48,7 +48,7 @@ const ProjectsPage = () => {
         return data?.publicUrl || null;
     };
 
-    const handleEditProject = (project: any) => {
+    const handleEditProject = (project: {id: string, project_name: string, project_brief: string, project_link: string}) => {
         setName(project.project_name);
         setBrief(project.project_brief);
         setLink(project.project_link);
@@ -131,7 +131,7 @@ const ProjectsPage = () => {
             return;
         }
 
-        const imageUrls = projectData.project_images.map((img: any) => img.image_url);
+        const imageUrls = projectData.project_images.map((img: { image_url: string }) => img.image_url);
         const fileNames = imageUrls.map((url: string) => url.split('/avatars/')[1]);
 
         const { error: storageError } = await supabase.storage
