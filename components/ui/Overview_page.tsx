@@ -41,7 +41,6 @@ const Overview_page: React.FC = () => {
           />
         </div>
 
-        {/* Charts Grid - Responsive - Always Visible */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:pr-6 flex-1 min-h-0">
           <div className="w-full bg-white rounded-lg shadow-sm border p-4 sm:p-2">
             <BrowserBarChart />

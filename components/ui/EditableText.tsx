@@ -121,7 +121,7 @@ const EditableText: React.FC<EditableTextProps> = ({
             }`}
             style={{ wordBreak: 'break-word' }}
           >
-            {text || placeholder}
+            <a href={text || placeholder} className='text-blue-700'>{text || placeholder}</a>
           </span>
           <button
             onClick={handleEditClick}

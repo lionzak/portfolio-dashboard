@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Check, X, Upload } from 'lucide-react'
 import { supabase } from '@/lib/supabaseClient'
+import Upload_image from './upload_image'
 
 interface TextFieldState {
   value: string
@@ -131,18 +132,36 @@ export default function PersonaInfoPage() {
     }
   }
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        const imageUrl = e.target?.result as string
-        setUploadedImage(imageUrl)
-        onUploadSuccess(imageUrl)
-      }
-      reader.readAsDataURL(file)
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const fileName = "profile_picture"; // fixed name
+    const bucket = "avatars"; // make sure this bucket exists
+
+    // Upload or overwrite the image
+    const { error: uploadError } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, file, {
+        upsert: true, // overwrite if already exists
+      });
+
+    if (uploadError) {
+      console.error("❌ Upload failed:", uploadError.message);
+      alert("Image upload failed.");
+      return;
     }
-  }
+
+    // Get the public URL
+    const { data: urlData } = supabase.storage
+      .from(bucket)
+      .getPublicUrl(fileName);
+
+    const publicUrl = urlData.publicUrl;
+    setUploadedImage(publicUrl); // show it
+    onUploadSuccess(publicUrl); // save in DB
+  };
+
 
   const triggerFileInput = () => {
     fileInputRef.current?.click()
@@ -312,38 +331,7 @@ export default function PersonaInfoPage() {
         </div>
 
         {/* Image Upload Section */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Image Upload</h2>
-
-          <div className="space-y-4">
-            <button
-              onClick={triggerFileInput}
-              className="flex items-center px-6 py-3 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors"
-            >
-              <Upload size={20} className="mr-2" />
-              Upload Image
-            </button>
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-            />
-
-            {uploadedImage && (
-              <div className="mt-4">
-                <p className="text-sm text-gray-600 mb-2">Uploaded Image:</p>
-                <img
-                  src={uploadedImage}
-                  alt="Uploaded"
-                  className="max-w-xs h-auto rounded-md border border-gray-300"
-                />
-              </div>
-            )}
-          </div>
-        </div>
+        <Upload_image triggerFileInput={triggerFileInput} fileInputRef={fileInputRef} handleImageUpload={handleImageUpload} uploadedImage={uploadedImage} />
       </div>
     </div>
   )

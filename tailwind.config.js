@@ -11,6 +11,9 @@ module.exports = {
   ],
   theme: {
   	extend: {
+		skillImageSize: {
+			"fluid": 'clamp(60px, 12vw, 80px)'
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',

@@ -22,8 +22,6 @@ export const useScrollDepthData = (user: User | null): ScrollDepthData => {
         console.warn("- Table is empty");
         console.warn("- RLS is blocking read access");
         console.warn("- Function isn't returning a value");
-      } else {
-        console.log("Average scroll depth:", data);
       }
 
       if (error) {
